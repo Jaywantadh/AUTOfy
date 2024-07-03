@@ -78,4 +78,24 @@ class SpotifyClient:
             print(f"Unexpected error occured: {e}")
             return None
         
-    def add_track_to_playlist(self, playlist)
+    def add_track_to_playlist(self, playlist_id, track_uris):
+        try:
+            self.sp.playlist_add_items(playlist_id, track_uris)
+        except SpotifyException as e:
+            print(f"Spotify API Error: {e}")
+        except Exception as e:
+            print(f"Unexpected error occured: {e}")
+
+    def load_playlist(self, playlist_id):
+        try:
+            results = self.sp.playlist_tracks(playlist_id)
+            track_uris = [item["track"]["uri"] for item in results["items"]]
+            for uri in track_uris:
+                self.sp.add_to_queue(uri)
+            return  [item["track"]["name"] for item in results["items"]]
+        except SpotifyException as e:
+            print(f"Spotify API Error: {e}")
+            return []
+        except Exception as e:
+            print(f"Unexpected error occured: {e}")
+            return []
