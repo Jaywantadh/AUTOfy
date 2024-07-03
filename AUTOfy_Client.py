@@ -49,7 +49,7 @@ class SpotifyClient:
             print(f"Unexpected error occured: {e}")
             return None
         
-    def conmtrol_playback(self, action):
+    def control_playback(self, action):
         try:
             if action == "play":
                 self.sp.start_playback()
